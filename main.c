@@ -20,6 +20,7 @@ int main(void)
 	{
 		printf("  Selecione uma opção digitando um número: ");
 		scanf(" %c", &option);
+		setbuf(stdin, NULL);
 
 		switch(option)
 		{
@@ -39,6 +40,7 @@ void encrypt(void)
 
 	char message[100];
 	scanf(" %100[^\n]s", message);
+	setbuf(stdin, NULL);
 	
     FILE *file = fopen("MensagemCriptografada.txt", "a+");
     
