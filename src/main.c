@@ -10,7 +10,8 @@ int main(void)
 {
 	setlocale(LC_ALL, "ptb");
 	printf(" Seja bem vindo ao melhor encriptador de mensagens.\n\n");
-	printf(" Menu\\Opções disponíveis\n");
+	printf(" Menu inicial\\\n");
+	printf("  Opções disponíveis\n");
 	printf("  0: Criptografar mensagens\n");
 	printf("  1: Descriptografar mensagens\n");
 	printf("  3: Sair do programa\n");
@@ -18,14 +19,14 @@ int main(void)
 	int option;
 	while(1)
 	{
-		printf("  Selecione uma opção digitando um número: ");
+		printf(" Selecione uma opção digitando um número: ");
 		scanf(" %c", &option);
 		setbuf(stdin, NULL);
 
 		switch(option)
 		{
 		    case '0': encrypt(); break;
-			case '1': printf("Opção indisponível\n",option); break;
+			case '1': printf("Opção indisponível\n", option); break;
 			case '3': exit(0);
 			default: printf("'%c' opção inválida.\n", option);
 		}
@@ -42,18 +43,31 @@ void encrypt(void)
 	scanf(" %100[^\n]s", message);
 	setbuf(stdin, NULL);
 	
-    FILE *file = fopen("MensagemCriptografada.txt", "a+");
-    
-    if(file == NULL)
-    {
-        perror("");
-    }
+	printf("  Agora digite o nome do arquivo: ");
 
-    fprintf(file, "%s", message);   
+	char file_name[32];
+	scanf(" %32[^\n]s", file_name);
+	setbuf(stdin, NULL);
+	
+    FILE *file = fopen(file_name, "w+");
+
+	int i=0;
+	while(message[i]!='\0')
+	{
+		if(isspace(message[i])) fprintf(file, " ", message[i]);
+		
+		else
+		{
+			fprintf(file, "%d", toupper(message[i]-64));
+			if(i!=strlen(message)-1) fprintf(file, "_", message[i]);
+		}
+		i++;
+	}
 
 	if(fclose(file) == 0)
     {
-    	printf(" '%s'", message);
+//    	printf(" '%s'", message);
+		printf(" '%s'", file_name);
 		printf(" Foi criptografada com sucesso.\n");
 		printf("------------------------------------------\n");
 	}
