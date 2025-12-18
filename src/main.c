@@ -19,14 +19,14 @@ int main(void)
 	int option;
 	while(1)
 	{
-		printf(" Selecione uma opção digitando um número: ");
+		printf(" Selecione uma opções digitando um número: ");
 		scanf(" %c", &option);
 		setbuf(stdin, NULL);
 
 		switch(option)
 		{
 		    case '0': encrypt(); break;
-			case '1': printf("Opção indisponível\n", option); break;
+			case '1': printf("Opção indispon?vel\n", option); break;
 			case '3': exit(0);
 			default: printf("'%c' opção inválida.\n", option);
 		}
@@ -58,8 +58,11 @@ void encrypt(void)
 		
 		else
 		{
-			fprintf(file, "%d", toupper(message[i]-64));
-			if(i!=strlen(message)-1) fprintf(file, "_", message[i]);
+			if(isalpha(message[i])!=0)
+			{
+				fprintf(file, "%d", toupper(message[i])-64);
+				if(i!=strlen(message)-1) fprintf(file, "_", message[i]);
+			}
 		}
 		i++;
 	}
