@@ -28,7 +28,7 @@ void ari_printf(void)
 	int option;
 	while(1)
 	{
-		printf(" Selecione uma opções digitando um número: ");
+		printf(" Selecione uma opções digitando um nï¿½mero: ");
 		scanf(" %c", &option);
 		setbuf(stdin, NULL);
 
@@ -38,8 +38,7 @@ void ari_printf(void)
 			{
 				printf("Digite o nome do arquivo: ");
 				char file_name[32];
-				scanf(" %[^\n]32s", file_name);
-				setbuf(stdin, NULL);
+				scanf(" %[^\n]", file_name);
 				
 				FILE *file = fopen(file_name, "r");
 				
@@ -74,38 +73,37 @@ void encrypt(void)
 	printf(" Criptografia\\\n");
 	printf("  Digite uma mensagem para criptografar: ");
 
-	char message[100];
-	scanf(" %[^\n]100s", message);
+	char message[101];
+	scanf(" %100[^\n]", message);
 	setbuf(stdin, NULL);
 
 	printf("  Agora digite o nome do arquivo: ");
 
 	char file_name[32];
-	scanf(" %[^\n]32s", file_name);
-	setbuf(stdin, NULL);
+	scanf(" %31[^\n]", file_name);
 
     FILE *file = fopen(file_name, "w+");
 
 	int i;
-	for(i=0; message[i] != '\0'; i++)
+	for (i=0; message[i] != '\0'; i++)
 	{
-		if(isspace(message[i])) fprintf(file, " ", message[i]);
+		if (isspace(message[i])) fprintf(file, " ", message[i]);
 
 		else
 		{
-			if(isalpha(message[i])!=0)
+			if (isalpha(message[i])!=0)
 			{
 				fprintf(file, "%d", toupper(message[i])-64);
-				if(i!=strlen(message)-1)
+				if (i!=strlen(message)-1)
 				{
-					if(!isspace(message[i+1]) && message[i]+1!='\0')
+					if(!isspace(message[i+1]) && message[i+1] != '\0')
 						fprintf(file, "_", message[i]);
 				}
 			}
 		}	
-	}//for
+	}
 	
-	if(fclose(file) == 0)
+	if (fclose(file) == 0)
 	{
 		printf(" Sua mensagem foi criptografada com sucesso.\n");
 		printf("_____%s_____________________________________\n", file_name);
@@ -154,8 +152,7 @@ void menu(void)
 	while(1)
 	{
 		printf(" Selecione uma opções digitando um número: ");
-		scanf(" %c", &option);
-		setbuf(stdin, NULL);
+		scanf(" %c", &option);	
 
 		switch(option)
 		{
@@ -167,4 +164,3 @@ void menu(void)
 		}
 	}
 }
-
