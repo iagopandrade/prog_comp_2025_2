@@ -7,7 +7,7 @@
 #include "aricd.h"
 #include "ario.h"
 
-void menu(void)
+void menu(void);
 
 int main(void)
 {
