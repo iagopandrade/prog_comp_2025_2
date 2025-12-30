@@ -7,39 +7,47 @@
 #include "aricd.h"
 #include "ario.h"
 
-void menu(void);
+#define EXIT		'E'
+#define ENCRIPT		'C'
 
 int main(void)
 {
 	setlocale(LC_ALL, "ptb");
 	printf(" Seja bem vindo ao melhor encriptador de mensagens.\n\n");
 
-	menu();
-	return 0;
-}
-
-void menu(void)
-{
-	printf(" Menu inicial\\\n");
-	printf("  Opções disponíveis\n");
-	printf("  0: Criptografar mensagens\n");
-	printf("  1: Descriptografar mensagens\n");
-	printf("  2: Visualizar mensagens\n");
-	printf("  3: Encerrar programa\n");
-	
-	int option;
 	while(1)
 	{
-		printf(" Selecione uma opções digitando um número: ");
-		scanf(" %c", &option);	
-
-		switch(option)
+		printf("ARI>");
+		char op;
+	    scanf(" %c", &op);
+	    fflush(stdin);
+		
+		op = toupper(op);
+		switch(op)
 		{
-		    case '0': encrypt(); break;
-			case '1': printf("Opção indisponível\n", option); break;
-			case '2': ari_printf(); break;
-			case '3': exit(0);
-			 default: printf("'%c' opção inválida.\n", option);
+			case EXIT: exit(0);
+			
+		    case ENCRIPT:
+		    {
+				printf("Informe a mensagem\n");
+				
+				printf("ARI\\criptografia>");
+				char message[101];
+				scanf(" %100[^\n]", message);
+								
+				printf("Informe o nome do arquivo\n");
+				
+				printf("ARI\\criptografia>");
+				char file_name[32];
+				scanf(" %31[^\n]", file_name);
+							
+		    	if (encrypt(file_name, message))
+					printf("Mensagem criptografada\n");
+				break;
+			}
+
+			default: printf("'%c' opção inválida\n", op);
 		}
 	}
+	return 0;
 }

@@ -28,7 +28,7 @@ int encrypt(char *file_name, char *message)
         perror("");
     return 0;
 }
-int test_decrypt(char *file_name)
+int decrypt(char *file_name)
 {
 	FILE *file = fopen(file_name, "r");
 	if (file == NULL)
