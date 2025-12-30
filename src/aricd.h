@@ -15,7 +15,7 @@ int encrypt(char *file_name, char *message)
 			{
 				fprintf(file, "%d", toupper(message[i]) - ('A' - 1));
 				
-                if (i != strlen(message) - 1)
+                if (i != strlen(message)-1)
 					if (!isspace((unsigned char)message[i+1]) && message[i+1] != '\0')
 					    fprintf(file, "_");
 			}
@@ -27,5 +27,47 @@ int encrypt(char *file_name, char *message)
     else
         perror("");
     return 0;
+}
+int test_decrypt(char *file_name)
+{
+	FILE *file = fopen(file_name, "r");
+	if (file == NULL)
+	{
+	    perror("");
+	    return 0;
+	}
+	
+	FILE *file_temp = fopen("temp.txt", "w");
+    if (file_temp == NULL)
+	{
+        perror("");
+        return 0;
+    }
+	
+	char message[101];
+	fscanf(file, "%100[^\n]", message);
+	
+	char *tok = strtok(message, "_");
+
+    while(tok != NULL)
+	{
+		int num = atoi(tok);
+
+		if (isspace((unsigned char)num))
+		{
+			fputc(' ', file_temp);
+			continue;
+		}
+			
+        fputc(num + 'A' - 1, file_temp);
+        tok = strtok(NULL, "_");
+    }
+    
+    fclose(file);
+    fclose(file_temp);
+
+    remove(file_name);
+    rename("temp.txt", file_name);
+    return 1;
 }
 #endif
