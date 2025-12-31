@@ -55,10 +55,10 @@ int main(void)
 				printf("ARI\\criptografia>");
 				char message[101];
 				scanf(" %100[^\n]", message);
-
+			
 				if (strcmp(message, "_cancelar") == 0)
-					break;
-								
+					break;				
+													
 				printf("Informe o nome do arquivo\n");
 				
 				printf("ARI\\criptografia>");
@@ -66,10 +66,12 @@ int main(void)
 				scanf(" %31[^\n]", file_name);
 
 				if (strcmp(file_name, "_cancelar") == 0)
-					break;				
-							
-		    	if (encrypt(file_name, message))
+					break;		
+		
+		    	if(encrypt(file_name, message)==1)
+		    	{
 					printf("Mensagem criptografada\n");
+				}
 				break;
 			}
 
