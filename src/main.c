@@ -27,6 +27,97 @@ void ari_commands(void)
 	printf("___________________________________________\n");
 }
 
+int criptografar(void)
+{
+	printf("Informe a mensagem\n");
+	printf("ARI\\criptografia>");
+	char message[101];
+	fgets(message, sizeof(message), stdin); 
+	
+	message[strcspn(message, "\n")] = '\0'; // Remove o '\n' do ENTER		
+	
+	// Verifica se a string é vazia
+	if (strlen(message) == 0)
+		return printf("Mensagem vazia\n");
+	
+	if (strcmp(message, "_cancelar") == 0)
+	{
+		printf("Operação cancelada\n");
+		return 0;
+	}
+
+	// Sinalizadores		
+	int i, space = 0, alpha = 0, digit = 0, special_symbol = 0;
+		
+	for (i = 0; message[i] != '\0'; i++)
+	{
+			
+		if (isalpha(message[i]) != 0)
+			alpha++;
+		else if (isdigit(message[i]) != 0)
+			digit++;
+
+		// Se não há caractere e nem espaço, automaticamente é um símbolo
+		else if (isalpha(message[i]) == 0 && isspace(message[i]) == 0)			
+        special_symbol++;
+	}
+
+	if (special_symbol > 0 || alpha == 0 || digit > 0)
+	{
+		if (special_symbol == 0 && alpha == 0 && digit == 0)
+		{
+			printf("A mensagem não pode ser composta apenas por espacos\n");
+			return -1;
+		}
+		if (special_symbol > 0) 
+			printf("A mensagem não pode conter caracteres especiais\n");		
+		if (alpha == 0) 
+			printf("A mensagem não possui letras\n");
+		if (digit > 0) 
+			printf("A mensagem não pode possuir dígitos\n");
+		return -1;
+	}
+
+	printf("Informe o nome do arquivo\n");
+	printf("ARI\\criptografia>");
+	char file_name[32];
+	fgets(file_name, sizeof(file_name), stdin);
+	
+	file_name[strcspn(file_name, "\n")] = '\0';
+
+	if (strcmp(file_name, "_cancelar") == 0)
+	{
+		printf("Operação cancelada.");
+		return 0;
+	}
+	
+	if (encrypt(file_name, message))			
+	{
+		printf("Mensagem criptografada\n");
+		
+		printf("Opções disponíveis\n");
+		printf("C	Criptografar uma nova mensagem\n");
+		printf("S   	Sair\n");
+		
+		char encrypt_op;
+		do
+		{
+			printf("ARI\\criptografia>");
+			scanf(" %c", &encrypt_op);
+			fflush(stdin);
+			encrypt_op = toupper(encrypt_op);
+		} while(encrypt_op != 'C' && encrypt_op != 'S');
+		
+		if (encrypt_op == 'C')
+		{
+			criptografar();
+		}
+		else
+			printf("Você saiu da seção\n");
+		return 1;
+	}
+}
+
 int main(void)
 {
 	setlocale(LC_ALL, "ptb");
@@ -50,30 +141,9 @@ int main(void)
 			
 		    case ENCRIPT:
 		    {
-				printf("Informe a mensagem\n");
-				
-				printf("ARI\\criptografia>");
-				char message[101];
-				scanf(" %100[^\n]", message);
-			
-				if (strcmp(message, "_cancelar") == 0)
-					break;				
-													
-				printf("Informe o nome do arquivo\n");
-				
-				printf("ARI\\criptografia>");
-				char file_name[32];
-				scanf(" %31[^\n]", file_name);
-
-				if (strcmp(file_name, "_cancelar") == 0)
-					break;		
-		
-		    	if(encrypt(file_name, message)==1)
-		    	{
-					printf("Mensagem criptografada\n");
-				}
+				criptografar();
 				break;
-			}
+			}// fim ENCRIPT
 
 			case DECRYPT:
 			{
@@ -81,7 +151,9 @@ int main(void)
     			
     			printf("ARI\\descriptografar>");
 				char in[32];
-    			scanf(" %31[^\n]", in);
+    			fgets(in, sizeof(in), stdin);
+    			
+				in[strcspn(in, "\n")] = '\0'; // Remove o '\n' do ENTER
     			
     			if (strcmp(in, "_cancelar") == 0)
 					break;
@@ -97,7 +169,9 @@ int main(void)
 				
 				printf("ARI\\visualizar>");
 				char in[32];
-				scanf(" %31[^\n]", in);
+				fgets(in, sizeof(in), stdin);
+				
+				in[strcspn(in, "\n")] = '\0'; // Remove o '\n' do ENTER
 				
 				if (strcmp(in, "_cancelar") == 0)
 					break;
@@ -116,7 +190,7 @@ int main(void)
 				fclose(file);
 				break;
 			}
-		
+
 			default: printf("'%c' opção inválida\n", op);
 		}
 	}
