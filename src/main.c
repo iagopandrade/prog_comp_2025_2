@@ -189,7 +189,7 @@ int main(void)
 			{			
 				system("cls");
 				printf("Opção 'Limpar' foi escolhida\n");
-				printf("Digite o novo caractere correspondente ao menu\n");	 
+				printf("Digite 'A' para	exibir os comandos do programa\n");	 
 				printf("_______________________________________________________________________\n");
 				break;
 			}
@@ -280,10 +280,16 @@ int main(void)
 				printf("%s: %s\n", input, message);
 				
 				fclose(file);
+				printf("Digite um novo caractere correspondente ao menu\n");
+            	printf("_______________________________________________________________________\n");
 				break;
 			}
 
-			default: printf("'%c' Opção inválida\n", option);
+			default:
+			{
+				printf("'%c' Opção inválida\n", option);
+				printf("Digite 'A' para	exibir os comandos do programa\n");	 
+			}
 		}
 	}
 	return 0;
