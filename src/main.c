@@ -59,9 +59,7 @@ int criptografar(void)
             return 0;
         }
       
-//		Sinalizadores
         int i, alpha = 0, digit = 0, special_symbol = 0;
-
         for (i = 0; message[i] != '\0'; i++) // Laço para verificar os caracteres da string
         {
             if (isalpha(message[i]))

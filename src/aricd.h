@@ -1,17 +1,17 @@
- #ifndef ARICD_H
+#ifndef ARICD_H
 #define ARICD_H
 int encrypt(char *file_name, char *message)
 {
     FILE *file = fopen(file_name, "w");
 
 	int i;
-	for (i=0; message[i] != '\0'; i++)
+	for (i = 0; message[i] != '\0'; i++)
 	{
 		if (isspace(message[i]))
 			fprintf(file, " ");
 		else
 		{
-			if (isalpha(message[i])!=0)
+			if (isalpha(message[i]) != 0)
 			{
 				fprintf(file, "%d", toupper(message[i]) - 64);
 				
@@ -57,7 +57,7 @@ int decrypt(char *file_name)
 
     while (tok != NULL)
     {
-//        trata possíveis espaços dentro do token */
+//        trata possíveis espaços dentro do token 
         char *p = tok;
 
         while (*p)
